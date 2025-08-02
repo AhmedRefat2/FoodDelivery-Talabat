@@ -21,5 +21,14 @@ namespace Talabat.Core.Specifications.ProductSpecs
         public int? BrandId { get; set; }
         public int? CategoryId { get; set; }
         public string? Sort { get; set; }
+
+        private string? search;
+
+        public string? Search
+        {
+            get { return search; }
+            set { search = value?.ToLower(); }
+        }
+
     }
 }

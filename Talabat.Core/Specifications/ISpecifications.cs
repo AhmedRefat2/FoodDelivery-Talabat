@@ -27,5 +27,8 @@ namespace Talabat.Core.Specifications
 
         // 7. Is Pagination Enabled
         public bool IsPaginationEnabled { get; set; }
+
+        // 8. Search 
+        public string? Search { get; set; }
     }
 }

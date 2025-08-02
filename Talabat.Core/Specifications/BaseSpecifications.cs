@@ -17,7 +17,8 @@ namespace Talabat.Core.Specifications
 
         public int Skip { get; set; }
         public int Take { get; set; }
-        public bool IsPaginationEnabled { get; set; } 
+        public bool IsPaginationEnabled { get; set; }
+        public string? Search { get ; set ; }
 
         // CTOR FOR GET ALL Without Crieteria
         public BaseSpecifications()
