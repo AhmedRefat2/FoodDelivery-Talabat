@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using Talabat.Apis.Extensions;
 using Talabat.Apis.Helpers;
+using Talabat.Apis.Middlewares;
 using Talabat.Core.Repositories.Contract;
 using Talabat.Repository;
 using Talabat.Repository.Data;
@@ -15,9 +17,7 @@ namespace Talabat.APIs
             #region Configure Services 
 
             webApplicationBuilder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            webApplicationBuilder.Services.AddEndpointsApiExplorer();
-            webApplicationBuilder.Services.AddSwaggerGen();
+            webApplicationBuilder.Services.AddSwaggerServices(); // Extension Method 
 
             // 1. Configure the Database Context
             webApplicationBuilder.Services.AddDbContext<StoreContext>(options =>
@@ -26,12 +26,7 @@ namespace Talabat.APIs
                        .GetConnectionString("DefaultConnection"));
             });
 
-            // 2. Configure Repositories
-            webApplicationBuilder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-
-            // 3. Configure Auto Mapper
-            //webApplicationBuilder.Services.AddAutoMapper(M => M.AddProfile(new MappingProfiles()));
-            webApplicationBuilder.Services.AddAutoMapper(typeof(MappingProfiles)); 
+            webApplicationBuilder.Services.AddApplicationServices(); // AutoMapper, Generic Repo, Validation Error
 
             #endregion
 
@@ -76,13 +71,16 @@ namespace Talabat.APIs
 
             #region Configure Middlewares [Http Request Pipline]
 
+            // ExceptionMiddleware
+            app.UseMiddleware<ExceptionMiddleware>();
+
             if (app.Environment.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerMiddleware();
             }
 
-            app.UseHttpsRedirection(); // Redirect HTTP requests to HTTPS
+            app.UseHttpsRedirection(); 
+            app.UseStatusCodePagesWithReExecute("/errors/{0}"); 
 
             app.UseStaticFiles();
 

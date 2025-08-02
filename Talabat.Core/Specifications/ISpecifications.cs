@@ -12,8 +12,12 @@ namespace Talabat.Core.Specifications
     {
         // Signuture For Props For Specs
         // 1. Where
-        public Expression<Func<T, bool>>? Criteria { get; set; }
+        public Expression<Func<T, bool>> Criteria { get; set; }
         // 2. Includes 
         public List<Expression<Func<T, object>>> Includes { get; set; }
+        // 3. Order By 
+        public Expression<Func<T, object>> OrderBy { get;}
+        // 4. Order By Descending
+        public Expression<Func<T, object>> OrderByDesc { get; }
     }
 }

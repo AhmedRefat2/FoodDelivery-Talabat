@@ -22,7 +22,8 @@ namespace Talabat.Repository
         }
 
         #region Without Spec DP
-        public async Task<IEnumerable<T>> GetAllAsync()
+
+        public async Task<IReadOnlyList<T>> GetAllAsync()
              => await _dbContext.Set<T>().ToListAsync();
 
         public async Task<T?> GetAsync(int id)
@@ -35,7 +36,7 @@ namespace Talabat.Repository
         public async Task<T?> GetWithSpecAsync(ISpecifications<T> specs)
          => await ApplySepcifications(specs).AsNoTracking().FirstOrDefaultAsync();
         
-        public async Task<IEnumerable<T>> GetAllWithSpecAsync(ISpecifications<T> specs)
+        public async Task<IReadOnlyList<T>> GetAllWithSpecAsync(ISpecifications<T> specs)
             => await ApplySepcifications(specs).AsNoTracking().ToListAsync();
 
         private IQueryable<T> ApplySepcifications(ISpecifications<T> specs)
