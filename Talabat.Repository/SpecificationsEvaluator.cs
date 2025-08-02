@@ -33,6 +33,11 @@ namespace Talabat.Repository
             if (specs.OrderByDesc is not null)
                 query = query.OrderByDescending(specs.OrderByDesc);
 
+            // 5. Pagination
+            if (specs.IsPaginationEnabled)
+                query = query.Skip(specs.Skip).Take(specs.Take);
+
+
             return query;
         }
 

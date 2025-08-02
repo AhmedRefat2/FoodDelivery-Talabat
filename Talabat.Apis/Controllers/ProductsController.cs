@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Talabat.Apis.Dtos;
 using Talabat.Apis.Errors;
+using Talabat.APIs.Helpers;
 using Talabat.Core.Models;
 using Talabat.Core.Repositories.Contract;
 using Talabat.Core.Specifications.ProductSpecs;
@@ -30,17 +31,21 @@ namespace Talabat.APIs.Controllers
 
         // GET: BaseUrl/api/Products
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<ProductToReturnDto>>> GetProducts(string? sort, int? brandId, int? categoryId) 
+        public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts([FromQuery] ProductSpecParams specParams) 
         {
-            var specs = new ProductWithBrandAndCategorySpecifications(sort, brandId, categoryId);
+            var specs = new ProductWithBrandAndCategorySpecifications(specParams);
 
             var products = await _productRepo.GetAllWithSpecAsync(specs);
 
             var mappedProducts = _mapper.Map<IReadOnlyList<ProductToReturnDto>>(products);
 
-            if (mappedProducts == null || !mappedProducts.Any())
-                return NotFound("No products found.");
-            return Ok(mappedProducts);
+            
+            var countSpecs = new ProductsWithFilterationForCountSpecification(specParams);
+
+            // Onthor Query For Get Count Without Pagination
+            var count = await _productRepo.GetCountAsync(countSpecs);
+
+            return Ok(new Pagination<ProductToReturnDto>(specParams.PageIndex, specParams.PageSize, count, mappedProducts));
         }
 
         // GET: BaseUrl/api/Products/5

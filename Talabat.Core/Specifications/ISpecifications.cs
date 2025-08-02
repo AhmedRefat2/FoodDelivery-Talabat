@@ -16,8 +16,16 @@ namespace Talabat.Core.Specifications
         // 2. Includes 
         public List<Expression<Func<T, object>>> Includes { get; set; }
         // 3. Order By 
-        public Expression<Func<T, object>> OrderBy { get;}
+        public Expression<Func<T, object>> OrderBy { get; }
         // 4. Order By Descending
         public Expression<Func<T, object>> OrderByDesc { get; }
+
+        // 5. Skip 
+        public int Skip { get; set; }
+        // 6. Take
+        public int Take { get; set; }
+
+        // 7. Is Pagination Enabled
+        public bool IsPaginationEnabled { get; set; }
     }
 }
