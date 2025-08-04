@@ -35,6 +35,8 @@ namespace Talabat.Apis.Extensions
                 };
             });
 
+            services.AddScoped(typeof(IBasketRepository), typeof(BasketRepository));
+
             return services;
         }
     }

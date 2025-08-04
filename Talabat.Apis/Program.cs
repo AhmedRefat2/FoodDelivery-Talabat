@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
 using Talabat.Apis.Extensions;
 using Talabat.Apis.Helpers;
 using Talabat.Apis.Middlewares;
@@ -24,6 +25,14 @@ namespace Talabat.APIs
             {
                 options.UseSqlServer(webApplicationBuilder.Configuration
                        .GetConnectionString("DefaultConnection"));
+            });
+
+
+            // Add Services Of Redis Database 
+            webApplicationBuilder.Services.AddSingleton<IConnectionMultiplexer>((serviceProvider) =>
+            {
+                var connection = webApplicationBuilder.Configuration.GetConnectionString("RedisConnection");
+                return ConnectionMultiplexer.Connect(connection);
             });
 
             webApplicationBuilder.Services.AddApplicationServices(); // AutoMapper, Generic Repo, Validation Error
