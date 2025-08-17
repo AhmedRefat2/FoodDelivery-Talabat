@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Talabat.Core.Models
+namespace Talabat.Core.Models.Product
 {
-    public class ProductCategory : BaseModel
+    public class ProductBrand : BaseModel
     {
         public string Name { get; set; }
+        // public ICollection<Product> Products { get; set; } = new HashSet<Product>();
     }
 }

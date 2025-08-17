@@ -9,7 +9,7 @@ using Talabat.Core.Repositories.Contract;
 using Talabat.Core.Specifications;
 using Talabat.Repository.Data;
 
-namespace Talabat.Repository
+namespace Talabat.Repository.GenericRepository
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : BaseModel
     {

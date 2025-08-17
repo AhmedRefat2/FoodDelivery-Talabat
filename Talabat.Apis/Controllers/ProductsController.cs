@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Talabat.Apis.Dtos;
 using Talabat.Apis.Errors;
 using Talabat.APIs.Helpers;
-using Talabat.Core.Models;
+using Talabat.Core.Models.Product;
 using Talabat.Core.Repositories.Contract;
 using Talabat.Core.Specifications.ProductSpecs;
 
@@ -29,8 +30,9 @@ namespace Talabat.APIs.Controllers
         }
 
 
-        // GET: BaseUrl/api/Products
-        [HttpGet]
+
+        [HttpGet] // GET: BaseUrl/api/Products
+        [Authorize]
         public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts([FromQuery] ProductSpecParams specParams) 
         {
             var specs = new ProductWithBrandAndCategorySpecifications(specParams);

@@ -7,7 +7,7 @@ using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Talabat.Core.Models;
+using Talabat.Core.Models.Product;
 using Talabat.Repository.Data.Configurations;
 
 namespace Talabat.Repository.Data
@@ -40,7 +40,6 @@ namespace Talabat.Repository.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductBrand> ProductBrands { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
-
 
     }
 }

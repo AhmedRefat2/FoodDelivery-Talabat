@@ -1,9 +1,15 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using Talabat.Apis.Errors;
 using Talabat.Apis.Helpers;
 using Talabat.Core.Repositories.Contract;
-using Talabat.Repository;
+using Talabat.Core.Services.Contract;
+using Talabat.Repository.BasketRepository;
+using Talabat.Repository.GenericRepository;
+using Talabat.Services.AuthService;
 
 namespace Talabat.Apis.Extensions
 {
@@ -36,6 +42,39 @@ namespace Talabat.Apis.Extensions
             });
 
             services.AddScoped(typeof(IBasketRepository), typeof(BasketRepository));
+
+            return services;
+        }
+
+        public static IServiceCollection AddAuthServices(this IServiceCollection services, IConfiguration Configuration)
+        {
+            services.AddAuthentication(options =>
+            {
+                // Default Authentication Schema
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                // Default Challenge Schema
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(Options =>
+            // Authentication Handeler For Bearer
+            {
+                Options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = Configuration["JWT:ValidIssuer"],
+                    ValidateAudience = true,
+                    ValidAudience = Configuration["JWT:ValidAudience"],
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+                        .GetBytes(Configuration["JWT:Authkey"])),
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+
+            services.AddScoped(typeof(IAuthService), typeof(AuthService));
+
+            // Register The 3 Main Services (UserManger, RoleManger, SignInManger)
+            // And Othor Confugurations like password Configurations and Can Update It 
 
             return services;
         }

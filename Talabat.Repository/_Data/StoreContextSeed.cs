@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Talabat.Core.Models;
+using Talabat.Core.Models.Product;
 
 namespace Talabat.Repository.Data
 {

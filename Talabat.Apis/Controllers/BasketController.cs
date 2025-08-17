@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Talabat.Apis.Dtos;
 using Talabat.Apis.Errors;
 using Talabat.APIs.Controllers;
-using Talabat.Core.Models;
+using Talabat.Core.Models.Basket;
 using Talabat.Core.Repositories.Contract;
 
 namespace Talabat.Apis.Controllers

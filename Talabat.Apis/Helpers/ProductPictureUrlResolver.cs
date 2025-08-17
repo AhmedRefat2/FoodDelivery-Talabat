@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Talabat.Apis.Dtos;
-using Talabat.Core.Models;
+using Talabat.Core.Models.Product;
 using static System.Net.WebRequestMethods;
 
 namespace Talabat.Apis.Helpers

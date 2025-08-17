@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Talabat.Core.Models
+namespace Talabat.Core.Models.Product
 {
     public class Product : BaseModel
     {

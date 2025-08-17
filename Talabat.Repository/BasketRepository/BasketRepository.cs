@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Talabat.Core.Models;
+using Talabat.Core.Models.Basket;
 using Talabat.Core.Repositories.Contract;
 
-namespace Talabat.Repository
+namespace Talabat.Repository.BasketRepository
 {
     public class BasketRepository : IBasketRepository
     {
@@ -27,7 +27,7 @@ namespace Talabat.Repository
         {
             var basket = await _database.StringGetAsync(basketId);
             // Deserialize the basket from JSON to CustomerBasket object
-            return (basket.IsNullOrEmpty) ? null : JsonSerializer.Deserialize<CustomerBasket>(basket!);
+            return basket.IsNullOrEmpty ? null : JsonSerializer.Deserialize<CustomerBasket>(basket!);
         }
 
         public async Task<CustomerBasket?> UpdateBasketAsync(CustomerBasket basket)
