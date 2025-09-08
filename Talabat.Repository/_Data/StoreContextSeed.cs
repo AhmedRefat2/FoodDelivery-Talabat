@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Talabat.Core.Models.Order_Aggregate;
 using Talabat.Core.Models.Product;
 
 namespace Talabat.Repository.Data
@@ -17,7 +18,7 @@ namespace Talabat.Repository.Data
             if (context.ProductBrands.Count() == 0)
             {
                 // Seed From Json File
-                var brandsData = File.ReadAllText("../Talabat.Repository/Data/DataSeed/brands.json");
+                var brandsData = File.ReadAllText("../Talabat.Repository/_Data/DataSeed/brands.json");
                 var brands = JsonSerializer.Deserialize<List<ProductBrand>>(brandsData);
                 if (brands?.Count() > 0)
                 {
@@ -34,7 +35,7 @@ namespace Talabat.Repository.Data
 
             if (context.ProductCategories.Count() == 0)
             {
-                var categoriesData = File.ReadAllText("../Talabat.Repository/Data/DataSeed/categories.json");
+                var categoriesData = File.ReadAllText("../Talabat.Repository/_Data/DataSeed/categories.json");
                 var categories = JsonSerializer.Deserialize<List<ProductCategory>>(categoriesData);
                 if (categories?.Count() > 0)
                 {
@@ -45,11 +46,22 @@ namespace Talabat.Repository.Data
 
             if (context.Products.Count() == 0)
             {
-                var productsData = File.ReadAllText("../Talabat.Repository/Data/DataSeed/products.json");
+                var productsData = File.ReadAllText("../Talabat.Repository/_Data/DataSeed/products.json");
                 var products = JsonSerializer.Deserialize<List<Product>>(productsData);
                 if (products?.Count() > 0)
                 {   
                     context.Products.AddRange(products);
+                    await context.SaveChangesAsync();
+                }
+            }
+
+            if (context.DeliveryMethods.Count() == 0)
+            {
+                var deliveryMethodsData = File.ReadAllText("../Talabat.Repository/_Data/DataSeed/delivery.json");
+                var deliveryMethods = JsonSerializer.Deserialize<List<DeliveryMethod>>(deliveryMethodsData);
+                if (deliveryMethods?.Count() > 0)
+                {
+                    context.DeliveryMethods.AddRange(deliveryMethods);
                     await context.SaveChangesAsync();
                 }
             }

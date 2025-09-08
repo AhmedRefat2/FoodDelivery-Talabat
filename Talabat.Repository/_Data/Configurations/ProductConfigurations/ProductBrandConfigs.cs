@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Talabat.Core.Models.Product;
 
-namespace Talabat.Repository.Data.Configurations
+namespace Talabat.Repository._Data.Configurations.ProductConfigurations
 {
     internal class ProductBrandConfigs : IEntityTypeConfiguration<ProductBrand>
     {
