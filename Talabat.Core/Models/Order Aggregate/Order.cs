@@ -15,11 +15,11 @@ namespace Talabat.Core.Models.Order_Aggregate
 
         }
 
-        public Order(string buyerEmail, Address shippingAddress, int? deliveryMethodId, ICollection<OrderItem> items, decimal subtotal)
+        public Order(string buyerEmail, Address shippingAddress, DeliveryMethod? deliveryMethod, ICollection<OrderItem> items, decimal subtotal)
         {
             BuyerEmail = buyerEmail;
             ShippingAddress = shippingAddress;
-            DeliveryMethodId = deliveryMethodId;
+            DeliveryMethod = deliveryMethod;
             Items = items;
             Subtotal = subtotal;
         }
@@ -29,7 +29,7 @@ namespace Talabat.Core.Models.Order_Aggregate
         public OrderStatus Status { get; set; } = OrderStatus.Pending;
         public Address ShippingAddress { get; set; } = null!;
         public int? DeliveryMethodId { get; set; } // Forigen Key 
-        public DeliveryMethod? DeliveryMethod { get; set; }
+        public DeliveryMethod? DeliveryMethod { get; set; } = null!;
         public ICollection<OrderItem> Items { get; set; } = new HashSet<OrderItem>(); // Nav Many 
         public decimal Subtotal { get; set; } // cost of order without Shipping cost
 

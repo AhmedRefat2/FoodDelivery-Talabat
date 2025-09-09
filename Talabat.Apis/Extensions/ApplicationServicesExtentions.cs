@@ -5,11 +5,14 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Talabat.Apis.Errors;
 using Talabat.Apis.Helpers;
+using Talabat.Core;
 using Talabat.Core.Repositories.Contract;
 using Talabat.Core.Services.Contract;
+using Talabat.Repository;
 using Talabat.Repository.BasketRepository;
 using Talabat.Repository.GenericRepository;
 using Talabat.Services.AuthService;
+using Talabat.Services.OrderServices;
 
 namespace Talabat.Apis.Extensions
 {
@@ -18,7 +21,9 @@ namespace Talabat.Apis.Extensions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             // Add Services of Generic Repo
-            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            // services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 
             // Add AutoMapper
             //services.AddAutoMapper(M => M.AddProfile(new MappingProfiles()));
@@ -42,6 +47,8 @@ namespace Talabat.Apis.Extensions
             });
 
             services.AddScoped(typeof(IBasketRepository), typeof(BasketRepository));
+
+            services.AddScoped(typeof(IOrderService), typeof(OrderService)); 
 
             return services;
         }

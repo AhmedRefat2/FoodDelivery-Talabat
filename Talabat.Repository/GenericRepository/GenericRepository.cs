@@ -16,7 +16,7 @@ namespace Talabat.Repository.GenericRepository
         private readonly StoreContext _dbContext;
 
 
-        public GenericRepository(StoreContext dbContext) // Ask CLR FOR Object From DbContext
+        public GenericRepository(StoreContext dbContext) // This dbContext Passed From Unit of Work 
         {
             _dbContext = dbContext;
         }
